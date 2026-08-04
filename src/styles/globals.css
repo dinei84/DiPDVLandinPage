@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@theme inline {
+  /* Cores */
+  --color-bg:            var(--bg);
+  --color-bg-elev:       var(--bg-elev);
+  --color-bg-sunken:     var(--bg-sunken);
+  --color-bg-muted:      var(--bg-muted);
+  --color-border:        var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink:           var(--ink);
+  --color-ink-2:         var(--ink-2);
+  --color-ink-3:         var(--ink-3);
+  --color-ink-4:         var(--ink-4);
+  --color-primary:       var(--primary);
+  --color-primary-2:     var(--primary-2);
+  --color-primary-3:     var(--primary-3);
+  --color-primary-ink:   var(--primary-ink);
+  --color-accent:        var(--accent);
+  --color-accent-3:      var(--accent-3);
+  --color-accent-ink:    var(--accent-ink);
+  --color-success:       var(--success);
+  --color-success-3:     var(--success-3);
+  --color-success-ink:   var(--success-ink);
+  --color-warning:       var(--warning);
+  --color-warning-3:     var(--warning-3);
+  --color-danger:        var(--danger);
+  --color-danger-3:      var(--danger-3);
+
+  /* Fontes */
+  --font-family-ui:   var(--font-ui);
+  --font-family-mono: var(--font-mono);
+  --default-font-family: var(--font-ui);
+  --default-mono-font-family: var(--font-mono);
+}
+
+/* Reset mínimo */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+
+/* Numéricos monoespaçados */
+.num {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Foco visível */
+.focusable:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Inputs */
+input, textarea, select {
+  color: inherit;
+  background-color: transparent;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: var(--ink-4);
+}
+
+/* Utilitários extra */
+.gradient-hero {
+  background: linear-gradient(160deg, var(--bg), var(--bg-elev) 60%);
+}
+
+.gradient-cta {
+  background: linear-gradient(160deg, var(--primary-2), var(--primary));
+}
+
+.gradient-mockup {
+  background: linear-gradient(160deg, var(--bg-sunken), var(--primary-3));
+}

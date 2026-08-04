@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DiPDV · Referências visuais — Landing Page</title>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:oklch(0.985 0.006 175);--surface:#fff;--sunken:oklch(0.965 0.01 175);--border:oklch(0.90 0.012 175);
+  --ink:oklch(0.22 0.02 200);--ink-2:oklch(0.42 0.02 200);--ink-3:oklch(0.58 0.015 200);
+  --primary:oklch(0.46 0.10 175);--primary-2:oklch(0.40 0.11 175);--primary-3:oklch(0.93 0.05 175);--primary-ink:oklch(0.32 0.09 175);
+  --accent:oklch(0.66 0.17 20);--accent-3:oklch(0.94 0.06 20);--accent-ink:oklch(0.42 0.15 20);
+  --success:oklch(0.55 0.13 155);--success-3:oklch(0.94 0.05 155);
+  --font-ui:'Plus Jakarta Sans',sans-serif;--font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#eef1ef;font-family:var(--font-ui)}
+.num{font-family:var(--font-mono);font-feature-settings:'tnum';letter-spacing:-0.01em}
+.card{width:480px;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,28,.05)}
+.tag{position:absolute;top:-30px;left:0;font:700 13px var(--font-ui);color:var(--ink-3);letter-spacing:.02em}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font:700 11.5px var(--font-ui);letter-spacing:.02em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:10px;font-weight:700;font-size:13.5px;padding:11px 18px;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel">
+const {useState} = React;
+
+function Frame({x,y,label,children}){
+  return <div style={{position:'absolute',left:x,top:y}}>
+    <div className="tag">{label}</div>
+    <div className="card">{children}</div>
+  </div>;
+}
+
+/* 1 — HERO */
+function Hero(){
+  return <div style={{padding:'44px 36px 40px',background:'linear-gradient(160deg,var(--bg),var(--surface) 60%)'}}>
+    <div className="pill" style={{background:'var(--primary-3)',color:'var(--primary-ink)',marginBottom:18}}>Feito para lanchonete, café e snack bar</div>
+    <h1 style={{fontSize:34,fontWeight:800,letterSpacing:'-0.03em',lineHeight:1.08,color:'var(--ink)',margin:0}}>
+      Sua comanda de papel<br/>vira <span style={{color:'var(--primary)'}}>venda registrada</span><br/>em segundos.
+    </h1>
+    <p style={{fontSize:15,color:'var(--ink-2)',lineHeight:1.5,marginTop:16,maxWidth:380}}>
+      Sistema de PDV simples, sem curva de aprendizado, pra quem toca o negócio sozinho e não tem tempo pra planilha.
+    </p>
+    <div style={{display:'flex',gap:10,marginTop:26}}>
+      <button className="btn" style={{background:'var(--primary)',color:'#fff'}}>Agendar demonstração</button>
+      <button className="btn" style={{background:'var(--success-3)',color:'oklch(0.4 0.1 155)'}}>💬 Falar no WhatsApp</button>
+    </div>
+    <div style={{marginTop:30,height:150,borderRadius:14,background:'var(--sunken)',border:'1px dashed var(--border)',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--ink-3)',fontSize:13,fontWeight:600}}>
+      [ mockup da tela do PDV ]
+    </div>
+  </div>;
+}
+
+/* 2 — PROBLEMA */
+function Problema(){
+  const items=[
+    {t:'Pedido errado, cliente irritado',d:'Comanda de papel some, letra ilegível, item esquecido. O prejuízo é na hora.',ic:'📝'},
+    {t:'Caixa que nunca fecha certo',d:'Dinheiro, Pix e cartão anotados em lugares diferentes. No fim do dia, ninguém sabe o número real.',ic:'🧾'},
+    {t:'WhatsApp e iFood bagunçados',d:'Pedido chega em 3 telas diferentes e alguém esquece de confirmar. Vendas se perdem.',ic:'📱'},
+  ];
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--accent-3)',color:'var(--accent-ink)',marginBottom:14}}>O problema todo dia</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 22px'}}>Isso te é familiar?</h2>
+    <div style={{display:'flex',flexDirection:'column',gap:12}}>
+      {items.map((it,i)=>(
+        <div key={i} style={{display:'flex',gap:14,padding:16,borderRadius:14,background:'var(--sunken)',border:'1px solid var(--border)'}}>
+          <div style={{fontSize:26,flexShrink:0}}>{it.ic}</div>
+          <div>
+            <div style={{fontWeight:700,fontSize:14.5,color:'var(--ink)'}}>{it.t}</div>
+            <div style={{fontSize:13,color:'var(--ink-2)',lineHeight:1.45,marginTop:3}}>{it.d}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>;
+}
+
+/* 3 — COMO FUNCIONA */
+function ComoFunciona(){
+  const steps=['Fazer pedido','Gerar comanda','Fechar caixa'];
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--primary-3)',color:'var(--primary-ink)',marginBottom:14}}>Simples assim</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 8px'}}>Como funciona</h2>
+    <p style={{fontSize:13.5,color:'var(--ink-3)',margin:'0 0 22px'}}>Do pedido ao dinheiro no bolso, sem planilha.</p>
+    <div style={{display:'flex',gap:8,marginBottom:20}}>
+      {steps.map((s,i)=>(
+        <div key={i} style={{flex:1,textAlign:'center'}}>
+          <div style={{width:28,height:28,borderRadius:999,background:'var(--primary)',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:13,margin:'0 auto 6px'}}>{i+1}</div>
+          <div style={{fontSize:11.5,fontWeight:700,color:'var(--ink-2)'}}>{s}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{height:230,borderRadius:16,background:'linear-gradient(160deg,var(--sunken),var(--primary-3))',border:'1px dashed var(--border)',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--primary-ink)',fontSize:13,fontWeight:700}}>
+      [ print real da tela do sistema ]
+    </div>
+  </div>;
+}
+
+/* 4 — MÓDULOS */
+function Modulos(){
+  const items=[
+    ['💠','Pix','Recebe na hora, sem maquininha extra'],
+    ['💳','Cartão','Pagamento integrado direto no caixa'],
+    ['📊','Relatórios','Saiba o que vende mais, sem esforço'],
+    ['📦','Estoque','Alerta antes de faltar produto'],
+    ['💬','Pedidos WhatsApp','Chega direto na comanda'],
+    ['🛵','Integração iFood','Sem digitar pedido 2 vezes'],
+    ['⭐','Fidelidade','Cliente que volta, vale mais'],
+  ];
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--primary-3)',color:'var(--primary-ink)',marginBottom:14}}>Módulos</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 22px'}}>Cresça na medida certa</h2>
+    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+      {items.map(([ic,t,d],i)=>(
+        <div key={i} style={{padding:12,borderRadius:12,border:'1px solid var(--border)',background:'var(--surface)'}}>
+          <div style={{fontSize:20,marginBottom:6}}>{ic}</div>
+          <div style={{fontWeight:700,fontSize:13,color:'var(--ink)'}}>{t}</div>
+          <div style={{fontSize:11.5,color:'var(--ink-3)',lineHeight:1.35,marginTop:2}}>{d}</div>
+        </div>
+      ))}
+    </div>
+  </div>;
+}
+
+/* 5 — PREÇOS */
+function Precos(){
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--accent-3)',color:'var(--accent-ink)',marginBottom:14}}>Modular de verdade</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 8px'}}>Pague só o que usa</h2>
+    <p style={{fontSize:13,color:'var(--ink-3)',margin:'0 0 20px'}}>Sem pacote fechado escondendo preço.</p>
+
+    <div style={{border:'1px solid var(--border)',borderRadius:14,padding:18,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:'var(--ink)'}}>Plano Base</div>
+      <div className="num" style={{fontSize:26,fontWeight:800,color:'var(--ink)',marginTop:4}}>R$ 89<span style={{fontSize:13,color:'var(--ink-3)'}}>/mês</span></div>
+      <div style={{fontSize:12,color:'var(--ink-3)',marginTop:4}}>Comanda, caixa, catálogo</div>
+    </div>
+
+    <div style={{display:'flex',gap:6,marginBottom:12,flexWrap:'wrap'}}>
+      {['Pix','Cartão','Relatórios','Estoque'].map(a=>(
+        <div key={a} style={{flex:'1 1 21%',border:'1px dashed var(--border)',borderRadius:10,padding:'10px 6px',textAlign:'center'}}>
+          <div style={{fontSize:10.5,fontWeight:700,color:'var(--ink-2)'}}>{a}</div>
+          <div className="num" style={{fontSize:13,fontWeight:800,color:'var(--ink)',marginTop:2}}>+R$29</div>
+        </div>
+      ))}
+    </div>
+    <div style={{fontSize:11,color:'var(--ink-3)',marginBottom:12,marginTop:-6}}>+ WhatsApp, iFood e Fidelidade, mesmo preço cada</div>
+
+    <div style={{borderRadius:14,padding:18,background:'var(--primary)',color:'#fff',position:'relative'}}>
+      <span style={{position:'absolute',top:-10,right:14,background:'var(--accent)',color:'#fff',fontSize:10,fontWeight:800,padding:'3px 9px',borderRadius:999}}>ECONOMIZA 39%</span>
+      <div style={{fontSize:13,fontWeight:700}}>Plano Completo</div>
+      <div className="num" style={{fontSize:26,fontWeight:800,marginTop:4}}>R$ 179<span style={{fontSize:13,opacity:.8}}>/mês</span></div>
+      <div style={{fontSize:12,opacity:.85,marginTop:4}}>Tudo incluso, sem surpresa</div>
+    </div>
+  </div>;
+}
+
+/* 6 — CONFIANÇA */
+function Confianca(){
+  return <div style={{padding:'40px 32px',background:'var(--sunken)'}}>
+    <div className="pill" style={{background:'var(--success-3)',color:'oklch(0.4 0.1 155)',marginBottom:14}}>Suporte de verdade</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 18px'}}>Fala direto com quem faz</h2>
+    <div style={{display:'flex',gap:12,alignItems:'flex-start',padding:18,borderRadius:14,background:'var(--surface)',border:'1px solid var(--border)'}}>
+      <div style={{width:44,height:44,borderRadius:999,background:'linear-gradient(135deg,var(--primary),var(--primary-2))',flexShrink:0}}></div>
+      <div>
+        <div style={{fontWeight:700,fontSize:14,color:'var(--ink)'}}>Sem central de atendimento genérica</div>
+        <p style={{fontSize:12.5,color:'var(--ink-2)',lineHeight:1.5,margin:'4px 0 0'}}>Dúvida ou problema? Você fala com quem desenvolve o sistema — resposta no mesmo dia, geralmente em minutos.</p>
+      </div>
+    </div>
+    <div style={{display:'flex',gap:10,marginTop:14}}>
+      <div style={{flex:1,padding:14,borderRadius:12,background:'var(--surface)',border:'1px solid var(--border)',textAlign:'center'}}>
+        <div className="num" style={{fontSize:20,fontWeight:800,color:'var(--primary)'}}>&lt; 2h</div>
+        <div style={{fontSize:11,color:'var(--ink-3)',marginTop:2}}>tempo médio de resposta</div>
+      </div>
+      <div style={{flex:1,padding:14,borderRadius:12,background:'var(--surface)',border:'1px solid var(--border)',textAlign:'center'}}>
+        <div className="num" style={{fontSize:20,fontWeight:800,color:'var(--primary)'}}>WhatsApp</div>
+        <div style={{fontSize:11,color:'var(--ink-3)',marginTop:2}}>canal direto de suporte</div>
+      </div>
+    </div>
+  </div>;
+}
+
+/* 7 — FAQ */
+function FAQ(){
+  const [open,setOpen]=useState(0);
+  const qs=[
+    'Trocar de sistema é difícil?',
+    'Funciona no celular?',
+    'Precisa de internet o tempo todo?',
+    'Como funciona o suporte?',
+  ];
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--primary-3)',color:'var(--primary-ink)',marginBottom:14}}>Perguntas frequentes</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 20px'}}>Dúvidas comuns</h2>
+    <div style={{display:'flex',flexDirection:'column',gap:8}}>
+      {qs.map((q,i)=>(
+        <div key={i} style={{border:'1px solid var(--border)',borderRadius:12,overflow:'hidden'}}>
+          <button onClick={()=>setOpen(open===i?-1:i)} style={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'13px 16px',background:open===i?'var(--primary-3)':'var(--surface)',border:'none',fontWeight:700,fontSize:13,color:'var(--ink)',cursor:'pointer'}}>
+            {q}<span style={{transform:open===i?'rotate(180deg)':'none',color:'var(--ink-3)'}}>▾</span>
+          </button>
+          {open===i && <div style={{padding:'0 16px 14px',fontSize:12.5,color:'var(--ink-2)',lineHeight:1.5}}>
+            Resposta breve e direta explicando o ponto sem enrolação — no tom que o dono de lanchonete espera.
+          </div>}
+        </div>
+      ))}
+    </div>
+  </div>;
+}
+
+/* 8 — CTA FINAL */
+function CTAFinal(){
+  return <div style={{padding:'48px 36px',background:'linear-gradient(160deg,var(--primary-2),var(--primary))',color:'#fff'}}>
+    <div className="pill" style={{background:'rgba(255,255,255,.15)',color:'#fff',marginBottom:18}}>Pronto pra começar?</div>
+    <h2 style={{fontSize:28,fontWeight:800,letterSpacing:'-0.025em',lineHeight:1.15,margin:0}}>
+      Menos papel.<br/>Mais controle.<br/>Hoje mesmo.
+    </h2>
+    <p style={{fontSize:14,opacity:.85,lineHeight:1.5,marginTop:14,maxWidth:340}}>
+      Escolha o caminho que preferir — testar sozinho ou conversar com a gente antes.
+    </p>
+    <div style={{display:'flex',flexDirection:'column',gap:10,marginTop:26}}>
+      <button className="btn" style={{background:'#fff',color:'var(--primary-ink)'}}>Começar agora →</button>
+      <button className="btn" style={{background:'rgba(255,255,255,.12)',color:'#fff',border:'1px solid rgba(255,255,255,.3)'}}>💬 Prefiro falar com alguém</button>
+    </div>
+  </div>;
+}
+
+/* 9 — CONTATO / ORÇAMENTO */
+function Contato(){
+  const [interesse,setInteresse]=useState('Plano Completo');
+  const inputStyle={width:'100%',padding:'11px 13px',borderRadius:10,border:'1px solid var(--border)',fontFamily:'var(--font-ui)',fontSize:13.5,color:'var(--ink)',background:'var(--surface)',outline:'none'};
+  const labelStyle={fontSize:12,fontWeight:700,color:'var(--ink-2)',marginBottom:6,display:'block'};
+  return <div style={{padding:'40px 32px'}}>
+    <div className="pill" style={{background:'var(--primary-3)',color:'var(--primary-ink)',marginBottom:14}}>Fale com a gente</div>
+    <h2 style={{fontSize:24,fontWeight:800,color:'var(--ink)',letterSpacing:'-0.02em',margin:'0 0 6px'}}>Peça seu orçamento</h2>
+    <p style={{fontSize:13,color:'var(--ink-3)',margin:'0 0 22px'}}>Resposta em até 2h, direto com quem desenvolve o sistema.</p>
+
+    <div style={{display:'flex',flexDirection:'column',gap:14}}>
+      <div>
+        <label style={labelStyle}>Seu nome</label>
+        <input style={inputStyle} placeholder="Como podemos te chamar?"/>
+      </div>
+      <div>
+        <label style={labelStyle}>Nome do estabelecimento</label>
+        <input style={inputStyle} placeholder="Ex: Lanchonete do Du"/>
+      </div>
+      <div>
+        <label style={labelStyle}>WhatsApp</label>
+        <input style={inputStyle} placeholder="(00) 00000-0000"/>
+      </div>
+      <div>
+        <label style={labelStyle}>O que você precisa?</label>
+        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+          {['Plano Base','Plano Completo','Ainda não sei'].map(opt=>(
+            <button key={opt} onClick={()=>setInteresse(opt)} style={{padding:'8px 13px',borderRadius:999,border:interesse===opt?'1px solid var(--primary)':'1px solid var(--border)',background:interesse===opt?'var(--primary-3)':'var(--surface)',color:interesse===opt?'var(--primary-ink)':'var(--ink-2)',fontSize:12,fontWeight:700,cursor:'pointer'}}>{opt}</button>
+          ))}
+        </div>
+      </div>
+      <div>
+        <label style={labelStyle}>Mensagem <span style={{fontWeight:500,color:'var(--ink-3)'}}>(opcional)</span></label>
+        <textarea style={{...inputStyle,resize:'none',fontFamily:'var(--font-ui)'}} rows={3} placeholder="Conta um pouco sobre o seu negócio..."></textarea>
+      </div>
+      <button className="btn" style={{background:'var(--primary)',color:'#fff',marginTop:4}}>Solicitar orçamento →</button>
+      <div style={{fontSize:11,color:'var(--ink-3)',textAlign:'center'}}>Ou prefere direto? <span style={{color:'var(--primary)',fontWeight:700}}>Chamar no WhatsApp →</span></div>
+    </div>
+  </div>;
+}
+
+function App(){
+  return <div data-screen-label="Landing DiPDV — cards de seção" style={{position:'relative',width:4680,height:820}}>
+    <Frame x={0}    y={60} label="01 · Hero"><Hero/></Frame>
+    <Frame x={520}  y={60} label="02 · Problema/Dor"><Problema/></Frame>
+    <Frame x={1040} y={60} label="03 · Como funciona"><ComoFunciona/></Frame>
+    <Frame x={1560} y={60} label="04 · Módulos"><Modulos/></Frame>
+    <Frame x={2080} y={60} label="05 · Preços"><Precos/></Frame>
+    <Frame x={2600} y={60} label="06 · Confiança"><Confianca/></Frame>
+    <Frame x={3120} y={60} label="07 · FAQ"><FAQ/></Frame>
+    <Frame x={3640} y={60} label="08 · CTA final"><CTAFinal/></Frame>
+    <Frame x={4160} y={60} label="09 · Contato/Orçamento"><Contato/></Frame>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
