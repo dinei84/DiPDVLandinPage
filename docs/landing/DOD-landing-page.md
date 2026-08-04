@@ -37,9 +37,51 @@ Componentes de UI: `src/components/ui/button.tsx`, `src/components/ui/pill.tsx`.
 - Campos: nome, estabelecimento, WhatsApp, interesse (pills Plano Base/Plano Completo/Ainda não sei), mensagem opcional.
 - Validação client-side: nome e WhatsApp obrigatórios, com mensagens de erro inline; estados idle/submitting/success/error.
 
-## 3. Correções feitas nesta sessão (para fechar a implementação)
+## 3. Diff completo da implementação
 
-### 3.1 `src/app/api/contact/route.ts` — instância do Resend era criada no topo do módulo
+A implementação inteira (9 seções, tokens de design, componentes de UI, formulário e rota `/api/contact`) está no commit inicial `12f2a99` — `feat: implementar landing page DiPDV (9 seções, SEO, formulário de leads)`.
+
+O diff completo e **não truncado** desse commit está salvo em:
+
+**`docs/landing/diff-implementacao-inicial.patch`** (8.621 linhas, ~317 KB — `git show 12f2a99`, excluindo apenas os screenshots binários em `docs/landing/screenshots/`, que são evidência visual e não parte da implementação).
+
+Resumo do conteúdo do patch (49 arquivos, 8.428 inserções):
+
+```
+commit 12f2a99dd82b39e45ed6f2b747a31f3862ec2666
+feat: implementar landing page DiPDV (9 seções, SEO, formulário de leads)
+
+ .env.example                                  |    4 +
+ .gitignore                                    |   15 +
+ eslint.config.mjs                             |   14 +
+ next.config.ts                                |    4 +
+ package.json                                  |   30 +
+ postcss.config.mjs                            |    8 +
+ src/app/api/contact/route.ts                  |   68 +
+ src/app/layout.tsx                            |   63 +
+ src/app/page.tsx                              |   25 +
+ src/components/sections/contact.tsx           |  188 +
+ src/components/sections/cta-final.tsx         |   49 +
+ src/components/sections/faq.tsx               |   77 +
+ src/components/sections/hero.tsx              |   56 +
+ src/components/sections/how-it-works.tsx      |   36 +
+ src/components/sections/modules.tsx           |   41 +
+ src/components/sections/pricing.tsx           |   71 +
+ src/components/sections/problem.tsx           |   51 +
+ src/components/sections/trust.tsx             |   40 +
+ src/components/ui/button.tsx                  |   35 +
+ src/components/ui/pill.tsx                    |   24 +
+ src/lib/utils.ts                              |    6 +
+ src/styles/globals.css                        |   97 +
+ src/styles/tokens.css                         |   64 +
+ tsconfig.json                                 |   40 +
+```
+
+A correções posteriores a esse commit (Resend lazy, `"use client"` em `button.tsx`/`cta-final.tsx`, fix do `e.currentTarget`, config de lint) estão na seção seguinte com seus diffs literais.
+
+## 4. Correções feitas nesta sessão (para fechar a implementação)
+
+### 4.1 `src/app/api/contact/route.ts` — instância do Resend era criada no topo do módulo
 `new Resend(process.env.RESEND_API_KEY || "")` lançava erro na *module load* (build quebrava com chave vazia). Agora a instância é criada dentro do handler, apenas quando há chave.
 
 ```diff
@@ -59,7 +101,7 @@ Componentes de UI: `src/components/ui/button.tsx`, `src/components/ui/pill.tsx`.
 +    const { data, error } = await resend.emails.send({
 ```
 
-### 3.2 `src/components/ui/button.tsx` + `src/components/sections/cta-final.tsx` — Client/Server Component boundary
+### 4.2 `src/components/ui/button.tsx` + `src/components/sections/cta-final.tsx` — Client/Server Component boundary
 `Button` (que recebe `onClick`) não era client component e `cta-final.tsx` (server) passava handler de evento para ele → erro de prerender "Event handlers cannot be passed to Client Component props". Adicionado `"use client"` em ambos.
 
 ```diff
@@ -73,7 +115,7 @@ Componentes de UI: `src/components/ui/button.tsx`, `src/components/ui/pill.tsx`.
   import { Button } from "@/components/ui/button";  // cta-final.tsx
 ```
 
-### 3.3 `src/components/sections/contact.tsx` — `e.currentTarget` nulo em handler async
+### 4.3 `src/components/sections/contact.tsx` — `e.currentTarget` nulo em handler async
 Após o `await fetch`, `e.currentTarget` é null no React (o handler já retornou). `e.currentTarget.reset()` lançava `TypeError`, capturado pelo `catch`, que sobrescrevia o estado de sucesso com erro — o formulário nunca mostrava "Mensagem enviada". Corrigido capturando `const form = e.currentTarget` antes do `await`.
 
 ```diff
@@ -93,10 +135,10 @@ Após o `await fetch`, `e.currentTarget` é null no React (o handler já retorno
        setInteresse("Plano Completo");
 ```
 
-### 3.4 Configuração de lint
+### 4.4 Configuração de lint
 `next lint` estava deprecado e abria prompt interativo (quebrado em CI). Criado `eslint.config.mjs` (flat config `next/core-web-vitals` + `next/typescript`) e script `lint` alterado para `eslint src`.
 
-## 4. Validação
+## 5. Validação
 
 ### Build (`npm run build`) — ✅
 ```
@@ -124,7 +166,7 @@ Página `/` estática, `/api/contact` dinâmica.
 
 `01-hero`, `02-problema`, `03-como-funciona`, `04-modulos`, `05-precos`, `06-confianca`, `07-faq`, `08-cta-final`, `09-contato`.
 
-## 5. Observações / pendências fora do escopo
+## 6. Observações / pendências fora do escopo
 
 - ⚠️ **FAQ "Precisa de internet o tempo todo?"** — usado o texto conservador do `LANDING_COPY.md` (rascunho). Confirmar com o Dinei antes de publicar (o produto não expõe comportamento offline nesta versão).
 - **Screenshots mockup/print** das seções 1 e 3 são placeholders ("[ mockup da tela do PDV ]" / "[ print real da tela do sistema ]") — aguardando artes reais.
