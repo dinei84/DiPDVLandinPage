@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Watermark } from "@/components/ui/watermark";
+import { BackToTop } from "@/components/ui/back-to-top";
 import "@/styles/globals.css";
 
 const fontSans = Plus_Jakarta_Sans({
@@ -57,7 +59,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${fontSans.variable} ${fontMono.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Watermark />
+        {children}
+        <BackToTop />
+      </body>
     </html>
   );
 }
