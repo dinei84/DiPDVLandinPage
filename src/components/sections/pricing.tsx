@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Pill } from "@/components/ui/pill";
 import { Reveal } from "@/components/ui/reveal";
+import { useAnimatedNumber } from "@/hooks/use-animated-number";
+import { cn } from "@/lib/utils";
 
 const BASE_PRICE = 89;
 const COMPLETO_PRICE = 179;
@@ -11,7 +13,9 @@ const ADDON_PRICE = 29;
 const addons = ["Pix", "Cartão", "Relatórios", "Estoque", "WhatsApp", "iFood", "Fidelidade"];
 
 export function PricingSection() {
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(
+    () => new Set(["Pix", "Cartão"])
+  );
 
   function toggle(addon: string) {
     setSelected((prev) => {
@@ -26,6 +30,7 @@ export function PricingSection() {
   }
 
   const total = BASE_PRICE + selected.size * ADDON_PRICE;
+  const animatedTotal = useAnimatedNumber(total);
   const completoIsBetter = total > COMPLETO_PRICE;
 
   return (
@@ -46,16 +51,36 @@ export function PricingSection() {
         <Reveal delay={80}>
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             {/* Plano Base */}
-            <div className="rounded-2xl border border-border bg-bg-elev p-6">
+            <div
+              className={cn(
+                "rounded-2xl border bg-bg-elev p-6 transition-all duration-300",
+                !completoIsBetter
+                  ? "border-primary ring-2 ring-primary"
+                  : "border-border"
+              )}
+            >
               <h3 className="text-sm font-bold text-ink">Plano Base</h3>
               <div className="num mt-1 text-3xl font-extrabold text-ink">
                 R$ 89<span className="text-base font-semibold text-ink-3">/mês</span>
               </div>
               <p className="mt-1 text-sm text-ink-3">Comanda, caixa, catálogo</p>
+              <p
+                className={cn(
+                  "mt-2 text-[11px] font-bold text-primary transition-opacity duration-300",
+                  !completoIsBetter ? "opacity-100" : "opacity-0"
+                )}
+              >
+                💡 Combina com os módulos que você escolheu
+              </p>
             </div>
 
             {/* Plano Completo */}
-            <div className="relative rounded-2xl bg-primary p-6 text-white">
+            <div
+              className={cn(
+                "relative rounded-2xl bg-primary p-6 text-white transition-all duration-300",
+                completoIsBetter && "ring-2 ring-accent ring-offset-2 ring-offset-bg"
+              )}
+            >
               <span className="badge-wiggle absolute -top-3 right-4 rounded-full bg-accent px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-ink">
                 Economiza 39%
               </span>
@@ -64,6 +89,14 @@ export function PricingSection() {
                 R$ 179<span className="text-base font-semibold opacity-80">/mês</span>
               </div>
               <p className="mt-1 text-sm opacity-85">Tudo incluso, sem surpresa</p>
+              <p
+                className={cn(
+                  "mt-2 text-[11px] font-bold transition-opacity duration-300",
+                  completoIsBetter ? "opacity-100" : "opacity-0"
+                )}
+              >
+                💡 Combina com os módulos que você escolheu
+              </p>
             </div>
           </div>
         </Reveal>
@@ -114,7 +147,7 @@ export function PricingSection() {
                   Seu plano estimado
                 </span>
                 <div className="num text-2xl font-extrabold text-ink">
-                  R$ {total}
+                  R$ {animatedTotal}
                   <span className="text-sm font-semibold text-ink-3">/mês</span>
                 </div>
               </div>
