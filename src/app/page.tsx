@@ -1,3 +1,5 @@
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { ProblemSection } from "@/components/sections/problem";
 import { HowItWorksSection } from "@/components/sections/how-it-works";
@@ -10,16 +12,20 @@ import { ContactSection } from "@/components/sections/contact";
 
 export default function Home() {
   return (
-    <main>
-      <HeroSection />
-      <ProblemSection />
-      <HowItWorksSection />
-      <ModulesSection />
-      <PricingSection />
-      <TrustSection />
-      <FaqSection />
-      <CtaFinalSection />
-      <ContactSection />
-    </main>
+    <>
+      <Header />
+      <main id="top">
+        <HeroSection />
+        <ProblemSection />
+        <HowItWorksSection />
+        <ModulesSection />
+        <PricingSection />
+        <TrustSection />
+        <FaqSection />
+        <CtaFinalSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
   );
 }

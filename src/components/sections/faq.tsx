@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Pill } from "@/components/ui/pill";
+import { Reveal } from "@/components/ui/reveal";
 
 const faqs = [
   {
@@ -26,48 +27,49 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="bg-bg-elev py-14 md:py-20">
+    <section id="faq" className="bg-bg-elev py-14 md:py-20">
       <div className="mx-auto max-w-3xl px-6">
-        <Pill variant="primary" className="mb-4">
-          Perguntas frequentes
-        </Pill>
-        <h2 className="mb-6 text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
-          Dúvidas comuns
-        </h2>
+        <Reveal>
+          <Pill variant="primary" className="mb-4">
+            Perguntas frequentes
+          </Pill>
+          <h2 className="mb-6 text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
+            Dúvidas comuns
+          </h2>
+        </Reveal>
 
         <div className="flex flex-col gap-3">
           {faqs.map((item, idx) => {
             const isOpen = open === idx;
             return (
-              <div
-                key={idx}
-                className="overflow-hidden rounded-xl border border-border"
-              >
-                <button
-                  onClick={() => setOpen(isOpen ? null : idx)}
-                  className="flex w-full items-center justify-between px-4 py-3.5 text-left"
-                  style={{
-                    backgroundColor: isOpen
-                      ? "var(--primary-3)"
-                      : "var(--bg-elev)",
-                  }}
-                >
-                  <span className="text-sm font-bold text-ink">{item.q}</span>
-                  <span
-                    className="text-ink-3 transition-transform"
-                    style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
+              <Reveal key={idx} delay={idx * 70}>
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <button
+                    onClick={() => setOpen(isOpen ? null : idx)}
+                    className="flex w-full items-center justify-between px-4 py-3.5 text-left"
+                    style={{
+                      backgroundColor: isOpen
+                        ? "var(--primary-3)"
+                        : "var(--bg-elev)",
+                    }}
                   >
-                    ▾
-                  </span>
-                </button>
-                {isOpen && (
-                  <div className="px-4 pb-4 pt-1">
-                    <p className="text-sm leading-relaxed text-ink-2">
-                      {item.a}
-                    </p>
-                  </div>
-                )}
-              </div>
+                    <span className="text-sm font-bold text-ink">{item.q}</span>
+                    <span
+                      className="text-ink-3 transition-transform"
+                      style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
+                    >
+                      ▾
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-4 pb-4 pt-1">
+                      <p className="text-sm leading-relaxed text-ink-2">
+                        {item.a}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Reveal>
             );
           })}
         </div>

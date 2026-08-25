@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Pill } from "@/components/ui/pill";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
 
 const WHATSAPP_NUMBER = "47999527711";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -56,15 +57,17 @@ export function ContactSection() {
   return (
     <section id="contato" className="bg-bg-elev py-14 md:py-20">
       <div className="mx-auto max-w-xl px-6">
-        <Pill variant="primary" className="mb-4">
-          Fale com a gente
-        </Pill>
-        <h2 className="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
-          Peça seu orçamento
-        </h2>
-        <p className="mt-2 text-sm text-ink-3">
-          Resposta em até 2h, direto com quem desenvolve o sistema.
-        </p>
+        <Reveal>
+          <Pill variant="primary" className="mb-4">
+            Fale com a gente
+          </Pill>
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
+            Peça seu orçamento
+          </h2>
+          <p className="mt-2 text-sm text-ink-3">
+            Resposta em até 2h, direto com quem desenvolve o sistema.
+          </p>
+        </Reveal>
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
           <div>
@@ -152,7 +155,7 @@ export function ContactSection() {
 
           <Button
             type="submit"
-            variant="primary"
+            variant="accent"
             className="mt-1 w-full"
             disabled={status === "submitting"}
           >

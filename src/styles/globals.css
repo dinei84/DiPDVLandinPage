@@ -42,6 +42,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 84px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -50,6 +51,8 @@ body {
   background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-ui);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 26px 26px;
 }
 
 /* Numéricos monoespaçados */
@@ -94,4 +97,88 @@ select::placeholder {
 
 .gradient-mockup {
   background: linear-gradient(160deg, var(--bg-sunken), var(--primary-3));
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Text reveal (per-word), plays on mount — no scroll observer needed */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: word-in 0.6s ease forwards;
+}
+
+/* Attention pulse — a soft glow ring, for the single most important CTA */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 10px color-mix(in oklab, var(--accent) 0%, transparent);
+  }
+}
+
+.cta-pulse {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+/* Attention wiggle — for a badge that deserves a second look */
+@keyframes badge-wiggle {
+  0%, 90%, 100% {
+    transform: rotate(0deg);
+  }
+  92% {
+    transform: rotate(-6deg);
+  }
+  94% {
+    transform: rotate(6deg);
+  }
+  96% {
+    transform: rotate(-3deg);
+  }
+  98% {
+    transform: rotate(3deg);
+  }
+}
+
+.badge-wiggle {
+  animation: badge-wiggle 4.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Step content swap */
+@keyframes step-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-fade-in {
+  animation: step-fade-in 0.35s ease;
 }
