@@ -5,12 +5,11 @@ export function Watermark() {
       className="pointer-events-none fixed inset-0 z-[5] flex items-center justify-center overflow-hidden"
     >
       <div
-        className="relative flex flex-shrink-0 items-center justify-center rounded-[18%]"
+        className="relative flex flex-shrink-0 items-center justify-center rounded-[18%] opacity-[0.035] md:opacity-[0.07]"
         style={{
           width: "min(78vw, 78vh)",
           height: "min(78vw, 78vh)",
           border: "3px solid var(--ink)",
-          opacity: 0.07,
         }}
       >
         <span
